@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url:
+    username:
+    password:
+
+  jpa:
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+aws:
+  region: us-east-2
+
+springdoc:
+  api-docs:
+    enabled: true

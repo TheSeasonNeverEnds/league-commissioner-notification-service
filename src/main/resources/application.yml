@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: league-commissioner-notification-service
+  config:
+    import:
+#  datasource:
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#  jpa:
+#    properties:
+#      hibernate:
+#        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+aws:
+  region: us-east-2
+  s3:
+    reports: league-draft-reports
+    events: league-event-flyers
+    media: league-venue-media
+
+springdoc:
+  api-docs:
+    enabled: false
+
+scheduler:
+  account:
+    login-history: 0 0 0 * * *
+
+
+twilio:
+  account:
+    sid: account-sid
+    auth-token: auth-token
+  sendgrid:
+    sg-key: api-key-here
