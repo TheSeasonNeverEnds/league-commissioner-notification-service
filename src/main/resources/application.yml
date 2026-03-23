@@ -3,12 +3,12 @@ spring:
     name: league-commissioner-notification-service
   config:
     import:
-#  datasource:
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#  jpa:
-#    properties:
-#      hibernate:
-#        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 aws:
   region: us-east-2

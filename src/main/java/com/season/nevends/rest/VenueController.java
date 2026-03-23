@@ -1,6 +1,6 @@
 package com.season.nevends.rest;
 
-import com.season.nevends.database.entities.VenueEntity;
+import com.season.nevends.model.VenueDetails;
 import com.season.nevends.service.VenueDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class VenueController {
     public ResponseEntity<?> getVenueDetails(@PathVariable Long venueId) { // or an integer
         log.info("Venue Details API called. Fetching info for venue: {}", venueId);
         try {
-            VenueEntity entity = venueDetailsService.getVenueDetails(venueId);
-            if (entity != null) {
-                return new ResponseEntity<>(entity, HttpStatus.OK);
+            VenueDetails details = venueDetailsService.getVenueDetails(venueId);
+            if (details != null) {
+                return new ResponseEntity<>(details, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

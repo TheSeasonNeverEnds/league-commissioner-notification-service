@@ -24,10 +24,10 @@ public class LocalSecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll())
-                .formLogin(withDefaults());
+            .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+            .authorizeHttpRequests(auth -> auth
+                    .anyRequest().permitAll())
+            .formLogin(withDefaults());
 
      return http.build();
     }
