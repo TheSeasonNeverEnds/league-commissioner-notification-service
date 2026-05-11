@@ -31,7 +31,7 @@ on:
     branches: [ "feature/initial-commit" ]
 
 env:
-  AWS_REGION: us-east2                   # set this to your preferred AWS region, e.g. us-west-1
+  AWS_REGION: us-east-2                   # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: league-commissioner-notification-service           # set this to your Amazon ECR repository name
   ECS_SERVICE: league-commissioner-notification-service                 # set this to your Amazon ECS service name
   ECS_CLUSTER: ecs-dev-tsne-v1                 # set this to your Amazon ECS cluster name
