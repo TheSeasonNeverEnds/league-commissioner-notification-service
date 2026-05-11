@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url:
-    username:
-    password:
+    url: jdbc:sqlserver://theseasonneverendswl.c4uijqbxxtmv.us-east-2.rds.amazonaws.com:1433;databaseName=TSNE_WL;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.rds.amazonaws.com
+    username: ${database.username}
+    password: ${database.password}
 
   jpa:
     properties:

@@ -1,3 +1,4 @@
+/*
 package com.season.nevends.service;
 
 import com.season.nevends.database.entities.LeagueEventEntity;
@@ -86,3 +87,4 @@ public class CalendarService {
         return eventEntity;
     }
 }
+*/

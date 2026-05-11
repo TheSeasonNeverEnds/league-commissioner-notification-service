@@ -19,13 +19,14 @@ public class VenueController {
     private VenueDetailsService venueDetailsService;
 
     @GetMapping(value = "/profile/{venueId}", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getVenueDetails(@PathVariable Long venueId) { // or an integer
-        log.info("Venue Details API called. Fetching info for venue: {}", venueId);
+    public ResponseEntity<?> getVenueDetails(@PathVariable Long venueId) {
+        log.info("Received request to fetch Venue Details for venue: {}", venueId);
         try {
             VenueDetails details = venueDetailsService.getVenueDetails(venueId);
             if (details != null) {
                 return new ResponseEntity<>(details, HttpStatus.OK);
             }
+            log.info("No Venue Details found for given venueId: {}", venueId);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

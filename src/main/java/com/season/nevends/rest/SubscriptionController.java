@@ -1,6 +1,9 @@
+/*
 package com.season.nevends.rest;
 
 
+import com.season.nevends.service.EmailNotificationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "api/v1/subscriptions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequiredArgsConstructor
+@RequestMapping(value = "api/v1/subscriptions")
 public class SubscriptionController {
 
-
+    private final EmailNotificationService emailNotificationService;
+//    private final SmsNotificationService smsNotificationService;
 
     @PostMapping("/email")
     public ResponseEntity<?> subscribeEmailNotification() {
@@ -35,3 +40,4 @@ public class SubscriptionController {
     }
 
 }
+*/

@@ -3,6 +3,8 @@ spring:
     name: league-commissioner-notification-service
   config:
     import:
+      - aws-secretsmanager:dev/application/twilio/credentials?prefix=twilio.
+      - aws-secretsmanager:dev/database/credentials?prefix=database.
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
@@ -31,4 +33,5 @@ twilio:
     sid: account-sid
     auth-token: auth-token
   sendgrid:
-    sg-key: api-key-here
+    fromEmail: ${twilio.sgSourceEmail}
+    sgApikey: ${twilio.sgApiKey}

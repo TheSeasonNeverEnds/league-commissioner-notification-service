@@ -1,3 +1,4 @@
+/*
 package com.season.nevends.rest;
 
 import com.season.nevends.database.entities.LeagueEventEntity;
@@ -49,6 +50,16 @@ public class CalendarController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @GetMapping(value = "/event/{eventId}", produces =  MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getLeagueEvent( @PathVariable Long eventId) {
+        log.info("Received request to get league event with Id: {}", eventId);
+        LeagueEventEntity event = calendarService.getLeagueCalendarEvent(eventId);
+        if (event == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(event, HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/event/{eventId}", produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteEvent(Long eventId) {
         // Logic to take in a single event and delete the event from  the calendar
@@ -78,15 +89,7 @@ public class CalendarController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/event/{leagueId}/{eventId}", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getLeagueEvent(@PathVariable Long leagueId, @PathVariable Long eventId) {
-        log.info("Received request to get league event with Id: {}", eventId);
-        LeagueEventEntity event = calendarService.getLeagueCalendarEvent(eventId);
-        if (event == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(event, HttpStatus.OK);
-    }
+
 
     @GetMapping(value = "/events", produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getLeagueEventsByDate(@RequestParam Long leagueId, @RequestParam String startDate, @RequestParam String endDate) {
@@ -99,3 +102,4 @@ public class CalendarController {
 
 
 }
+*/

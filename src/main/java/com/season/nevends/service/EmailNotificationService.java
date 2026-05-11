@@ -1,19 +1,24 @@
 package com.season.nevends.service;
 
 
+import com.season.nevends.handler.EmailPublishHandler;
+import com.season.nevends.model.NotificationRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class EmailNotificationService {
 
-    public void sendEmailNotification(){
-        // TODO
+    private final EmailPublishHandler emailPublishHandler;
+
+    public void sendEmailNotification(NotificationRequest request) throws IOException {
+        emailPublishHandler.publishEmailNotification(request);
     }
 
     public void subscribeToEmailNotifications(Long userId){

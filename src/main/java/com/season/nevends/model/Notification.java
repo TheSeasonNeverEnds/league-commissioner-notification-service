@@ -8,7 +8,8 @@ public enum Notification {
 
     PROMOTION("Promotion"),
     DRAFT("Draft"),
-    ANNOUNCEMENT("Announcement");
+    ANNOUNCEMENT("Announcement"),
+    INVITATION("Invitation");
 
     private final String type;
 

@@ -1,43 +1,48 @@
 package com.season.nevends.handler;
+import com.season.nevends.model.NotificationRequest;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.objects.Personalization;
+import com.twilio.rest.verify.v2.Template;
+import com.twilio.rest.verify.v2.TemplateReader;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+@Slf4j
+@Component
 public class EmailPublishHandler {
 
-    /*
-        This class will handle sending emails, subscribing and unsubscribing from Emails topics.
-        As of now, the Topics will be configured in AWS SES.
-        Once a message/payload is sent to a topic,
-        SES will take care of distributing the message to the subscribers in the topic.
-    */
+    @Value("${twilio.sendgrid.fromEmail}")
+    private String fromEmail;
+
+    @Value("${twilio.sendgrid.sgApikey}")
+    private String sgApiKey;
 
     // Add method to publish email to subscribers
-    public void sendEmailNotification() {
+    public void publishEmailNotification(NotificationRequest notificationRequest) throws IOException {
+        log.info("Preparing email notification(s).");
 
-        Email from = new Email("test@example.com");
-        String subject = "Sending with Twilio SendGrid is Fun";
-        Email to = new Email("test@example.com");
-        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
-        Mail mail = new Mail(from, subject, to, content);
+        Mail mail = buildEmailMessage(notificationRequest);
 
-        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+        SendGrid sg = new SendGrid(sgApiKey);
         Request request = new Request();
-
         try {
-
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
         } catch (IOException ex) {
-
-            throw new RuntimeException();
-
+            throw ex;
         }
+
+
     }
 
     // Add method to subscribe users to an email topic for notifications
@@ -47,10 +52,28 @@ public class EmailPublishHandler {
 
     // Add method to unsubscribe users from an email topic for notifications
     public void unsubscribeFromEmailTopic() {
-
     }
 
 
-    public void buildEmailMessage() {}
+    private Mail buildEmailMessage(NotificationRequest notificationRequest) {
+        log.info("Building email contents");
+
+        Email from = new Email(fromEmail);
+        String subject = "Sending with Twilio SendGrid is Fun - hidden emails";
+        Content content = new Content("text/html", "Welcome to the Twilio SendGrid world where you can send <strong>bulk emails</strong>!");
+
+        Mail mail = new Mail();
+        mail.setFrom(from);
+        mail.setSubject(subject);
+        mail.addContent(content);
+
+        notificationRequest.getEmailRecipients().forEach(recipient -> {
+            Personalization personalization = new Personalization();
+            personalization.addTo(new Email(recipient));
+            mail.addPersonalization(personalization);
+        });
+
+        return mail;
+    }
 
 }
