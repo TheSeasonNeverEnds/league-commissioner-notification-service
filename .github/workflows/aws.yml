@@ -49,6 +49,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
 
+    permissions:
+      id-token: write
+      contents: read    # Explicitly include other needed permissions
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
