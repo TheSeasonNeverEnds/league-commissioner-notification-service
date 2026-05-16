@@ -116,6 +116,7 @@ jobs:
         cluster: ${{ env.ECS_CLUSTER }}
         # Instead of passing a local task-definition.json file, omit it
         # to let ECS deploy using its active task definition.
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
         image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
         wait-for-service-stability: true
 
