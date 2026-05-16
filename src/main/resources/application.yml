@@ -1,10 +1,14 @@
 spring:
+  cloud:
+    aws:
+      region:
+        static: us-east-2
   application:
     name: league-commissioner-notification-service
   config:
     import:
-      - aws-secretsmanager:dev/application/twilio/credentials?prefix=twilio.
-      - aws-secretsmanager:dev/database/credentials?prefix=database.
+      - optional:aws-secretsmanager:dev/application/twilio/credentials?prefix=twilio.
+      - optional:aws-secretsmanager:dev/database/credentials?prefix=database.
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
