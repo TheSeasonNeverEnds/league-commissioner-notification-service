@@ -71,8 +71,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    - name: Build with Maven
-      run: mvn clean package -DskipTests
+    # - name: Build with Maven
+    #   run: mvn clean package -DskipTests
 
     # Sets up multi-arch support for Graviton
     - name: Set up QEMU
