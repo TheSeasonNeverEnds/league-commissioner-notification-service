@@ -25,7 +25,7 @@ public class EmailPublishHandler {
     @Value("${twilio.sendgrid.sgApikey}")
     private String sgApiKey;
 
-    // Add method to publish email to subscribers
+    
     public void publishEmailNotification(NotificationRequest notificationRequest) throws IOException {
         log.info("Preparing email notification(s).");
 
