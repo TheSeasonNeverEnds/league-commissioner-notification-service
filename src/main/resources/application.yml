@@ -32,10 +32,10 @@ scheduler:
     login-history: 0 0 0 * * *
 
 
-twilio:
-  account:
-    sid: account-sid
-    auth-token: auth-token
-  sendgrid:
-    fromEmail: ${twilio.sgSourceEmail}
-    sgApikey: ${twilio.sgApiKey}
+#twilio:
+#  account:
+#    sid: account-sid
+#    auth-token: auth-token
+#  sendgrid:
+#    fromEmail: ${twilio.sgSourceEmail}
+#    sgApikey: ${twilio.sgApiKey}

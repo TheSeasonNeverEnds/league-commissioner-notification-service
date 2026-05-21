@@ -1,28 +1,26 @@
 package com.season.nevends.handler;
+import com.season.nevends.model.EmailDetails;
 import com.season.nevends.model.NotificationRequest;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.sendgrid.helpers.mail.objects.Personalization;
-import com.twilio.rest.verify.v2.Template;
-import com.twilio.rest.verify.v2.TemplateReader;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Component
 public class EmailPublishHandler {
 
-    @Value("${twilio.sendgrid.fromEmail}")
+    @Value("${twilio.sendgrid.fromEmail:sampleEmail}")
     private String fromEmail;
 
-    @Value("${twilio.sendgrid.sgApikey}")
+    @Value("${twilio.sendgrid.sgApikey:sampleKey}")
     private String sgApiKey;
 
     
@@ -56,7 +54,10 @@ public class EmailPublishHandler {
 
 
     private Mail buildEmailMessage(NotificationRequest notificationRequest) {
-        log.info("Building email contents");
+        log.info("Building Email Notification Messages.");
+
+        // TODO: Build subject, content, attachments
+        EmailDetails emailDetails = buildEmailDetails(notificationRequest);
 
         Email from = new Email(fromEmail);
         String subject = "Sending with Twilio SendGrid is Fun - hidden emails";
@@ -74,6 +75,15 @@ public class EmailPublishHandler {
         });
 
         return mail;
+    }
+
+    // TODO: Need a method to draft email contents
+    private EmailDetails buildEmailDetails(NotificationRequest notificationRequest) {
+        log.info("Building email details");
+        EmailDetails emailDetails = new EmailDetails();
+        emailDetails.setSubject("");
+
+        return emailDetails;
     }
 
 }
