@@ -1,5 +1,5 @@
 package com.season.nevends.handler;
-import com.season.nevends.model.EmailDetails;
+//import com.season.nevends.model.EmailDetails;
 import com.season.nevends.model.NotificationRequest;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
@@ -57,7 +57,7 @@ public class EmailPublishHandler {
         log.info("Building Email Notification Messages.");
 
         // TODO: Build subject, content, attachments
-        EmailDetails emailDetails = buildEmailDetails(notificationRequest);
+//        EmailDetails emailDetails = buildEmailDetails(notificationRequest);
 
         Email from = new Email(fromEmail);
         String subject = "Sending with Twilio SendGrid is Fun - hidden emails";
@@ -78,12 +78,12 @@ public class EmailPublishHandler {
     }
 
     // TODO: Need a method to draft email contents
-    private EmailDetails buildEmailDetails(NotificationRequest notificationRequest) {
-        log.info("Building email details");
-        EmailDetails emailDetails = new EmailDetails();
-        emailDetails.setSubject("");
-
-        return emailDetails;
-    }
+//    private EmailDetails buildEmailDetails(NotificationRequest notificationRequest) {
+//        log.info("Building email details");
+//        EmailDetails emailDetails = new EmailDetails();
+//        emailDetails.setSubject("");
+//
+//        return emailDetails;
+//    }
 
 }
