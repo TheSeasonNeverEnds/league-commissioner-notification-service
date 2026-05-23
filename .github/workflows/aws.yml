@@ -69,10 +69,12 @@ jobs:
         echo "IMAGE_TAG=${BRANCH_NAME}-${DATE}" >> $GITHUB_ENV
 
     - id: print-tag-steps
-      run: echo "The tag using steps is:  ${{ steps.generate-tag.outputs.IMAGE_TAG }}"
+      run: |
+        echo "The tag using steps is:  ${{ steps.generate-tag.outputs.IMAGE_TAG }}"
 
     - id: print-tag-env-var
-      run: echo "The tag using env vars is:  ${{ env.IMAGE_TAG }}"
+      run: |
+        echo "The tag using env vars is:  ${{ env.IMAGE_TAG }}"
 
       # Add this step before the configure-aws-credentials step
     - name: Debug OIDC token claims
