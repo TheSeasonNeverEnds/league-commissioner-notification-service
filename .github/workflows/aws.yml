@@ -59,6 +59,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - id: generate-tag
+      run: |
+        # Get branch name (e.g., 'main' or 'feature-xyz')
+        BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')
+        # Get date (YYYYMMDD format)
+        DATE=$(date +'%Y.%m.%d-%H%M')
+        # Combine them
+        echo "IMAGE_TAG=${BRANCH_NAME}-${DATE}" >> $GITHUB_ENV
+
       # Add this step before the configure-aws-credentials step
     - name: Debug OIDC token claims
       run: |
@@ -73,14 +82,13 @@ jobs:
       # Authenticate with AWS using OIDC
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v5
-#      with:
-#        role-to-assume: arn:aws:iam::591207637355:role/GitHubAction-AssumeRoleWithAction
-#        aws-region: us-east-2
-        # role-session-name: GitHubActionsECSDeployment
       with:
-       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-       aws-region: ${{ env.AWS_REGION }}
+        role-to-assume: arn:aws:iam::591207637355:role/GitHubAction-AssumeRoleWithAction
+        aws-region: us-east-2
+#      with:
+#       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       aws-region: ${{ env.AWS_REGION }}
 
     # - name: Build with Maven
     #   run: mvn clean package -DskipTests
@@ -110,12 +118,22 @@ jobs:
 #        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
     - name: Build, tag, and push image to Amazon ECR
+      id: build-image
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
         platforms: linux/arm64 # Targets Graviton architecture
-        tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+        tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}:IMAGE_TAG
+
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: ${{ env.CONTAINER_NAME }}
+        image: ${{ steps.build-image.outputs.image }}
 
 
     # This action will read the existing service configuration directly and deploy the servic
@@ -127,8 +145,9 @@ jobs:
         cluster: ${{ env.ECS_CLUSTER }}
         # Instead of passing a local task-definition.json file, omit it
         # to let ECS deploy using its active task definition.
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}:IMAGE_TAG
+        desired-count: 1
         wait-for-service-stability: true
 
 
