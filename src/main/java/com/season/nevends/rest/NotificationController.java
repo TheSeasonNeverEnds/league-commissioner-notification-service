@@ -3,6 +3,7 @@ package com.season.nevends.rest;
 
 import com.season.nevends.handler.EmailPublishHandler;
 import com.season.nevends.model.NotificationRequest;
+import com.season.nevends.model.NotificationType;
 import com.season.nevends.service.EmailNotificationService;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.service.Verification;
@@ -26,7 +27,7 @@ public class NotificationController {
 
     @PostMapping(path = "/email",  consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendEmailNotification(@Valid @RequestBody NotificationRequest request) {
-        log.info("Received email notification request for League - {}", request.getLeagueId());
+        log.info("Received email notification request of - {}", request.getNotificationType());
 
         try {
             emailNotificationService.sendEmailNotification(request);

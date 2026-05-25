@@ -16,7 +16,7 @@ public class LeagueEvent {
     private Long eventId;
     private Long leagueId;
     private String leagueName;
-    private Notification eventType;
+    private NotificationType eventType;
     private int venueId;
     private String eventTitle;
     private String eventDescription;

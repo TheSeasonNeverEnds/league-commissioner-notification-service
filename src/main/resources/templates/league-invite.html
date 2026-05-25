@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy League Invite</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .wrapper { width: 100%; table-layout: fixed; background-color: #f4f4f4; padding-bottom: 40px; }
+        .main { background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 600px; border-spacing: 0; color: #333333; }
+        .header { background-color: #1a1a1a; padding: 20px; text-align: center; color: #ffffff; }
+        .content { padding: 30px; line-height: 1.6; }
+        .button-container { text-align: center; padding: 20px 0; }
+        .button { background-color: #e63946; color: #ffffff; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; }
+        .details-table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        .details-table td { padding: 10px; border-bottom: 1px solid #eeeeee; }
+        .label { font-weight: bold; width: 100px; }
+        .footer { text-align: center; font-size: 12px; color: #777777; padding: 20px; }
+    </style>
+</head>
+<body>
+<center class="wrapper">
+    <table class="main" width="100%">
+        <!-- Header -->
+        <tr>
+            <td class="header">
+                <h1 style="margin: 0; letter-spacing: 2px;">Welcome to The Season Never Ends</h1>
+            </td>
+        </tr>
+
+        <!-- Body Content -->
+        <tr>
+            <td class="content">
+                <h2 style="color: #1a1a1a;">Ready to prove you're the best?</h2>
+                <p>It's that time of year again. The rosters are fresh, the trash talk is brewing, and a new season of <strong>[League Name]</strong> is about to kick off.</p>
+
+                <p>Think you have what it takes to hoist the trophy (or at least avoid the last-place punishment)? Click the button below to claim your spot.</p>
+
+                <!-- League Details -->
+                <table class="details-table">
+                    <tr>
+                        <td class="label">Draft Date:</td>
+                        <td>[Date] at [Time]</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Buy-in:</td>
+                        <td>$[Amount]</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Format:</td>
+                        <td>[PPR / Standard / Keeper]</td>
+                    </tr>
+                    <tr>
+                        <td class="label">League Code:</td>
+                        <!--                        <td th:text="${leagueCode}"></td>-->
+                        <td> C59W-GE1K</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Venue:</td>
+                        <!--                        <td th:text="${venueId}"></td>-->
+                        <td> Venue Details</td>
+                    </tr>
+                </table>
+
+                <!-- CTA Button -->
+                <div class="button-container">
+                    <a href="[https://google.com]" class="button">JOIN THE LEAGUE</a>
+                </div>
+            </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+            <td class="footer">
+                <p>Sent by Commissioner [Your Name]<br>
+                    Don't be the person who holds up the draft. Join today!<br>
+                    The Season Never Ends !!
+                </p>
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+</html>

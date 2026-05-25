@@ -19,3 +19,12 @@ aws:
 springdoc:
   api-docs:
     enabled: true
+
+
+twilio:
+  account:
+    sid: account-sid
+    auth-token: auth-token
+  sendgrid:
+    fromEmail: ${twilio.sgSourceEmail}
+    sgApikey: ${twilio.sgApiKey}

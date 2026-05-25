@@ -17,10 +17,10 @@ import java.io.IOException;
 @Component
 public class EmailPublishHandler {
 
-    @Value("${twilio.sendgrid.fromEmail:sampleEmail}")
+    @Value("${twilio.sendgrid.fromEmail}")
     private String fromEmail;
 
-    @Value("${twilio.sendgrid.sgApikey:sampleKey}")
+    @Value("${twilio.sendgrid.sgApikey}")
     private String sgApiKey;
 
     
@@ -85,5 +85,39 @@ public class EmailPublishHandler {
 //
 //        return emailDetails;
 //    }
+
+
+    public void sendEmailNotificationV1(NotificationRequest notificationRequest, String htmlContent) throws IOException {
+        log.info("Building email notification - V1");
+
+        Email from = new Email(fromEmail);
+        String subject = notificationRequest.getNotificationType().getEmailSubject();
+        Content content = new Content("text/html", htmlContent);
+
+        Mail mail = new Mail();
+        mail.setFrom(from);
+        mail.setSubject(subject);
+        mail.addContent(content);
+
+        notificationRequest.getEmailRecipients().forEach(recipient -> {
+            Personalization personalization = new Personalization();
+            personalization.addTo(new Email(recipient));
+            mail.addPersonalization(personalization);
+        });
+
+        SendGrid sg = new SendGrid(sgApiKey);
+        Request request = new Request();
+        try {
+            log.info("Sending Email Notification - V1");
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
+    }
 
 }
