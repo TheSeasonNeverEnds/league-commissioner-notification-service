@@ -28,14 +28,22 @@ public class EmailServiceV1 {
     public void sendEmail(NotificationRequest request) {
 
 
-        Map<String, Object> variables = new HashMap<>(Map.of(
-                "leagueId", request.getLeagueId(),
-                "leagueName", request.getLeagueName(),
-                "leagueCode", request.getLeagueCode(),
-                "leagueJoinUrl", request.getLeagueJoinUrl(),
-                "venueId", request.getVenueId(),
-                "oneTimeToken", request.getOneTimeToken()
-        ));
+//        Map<String, Object> variables = new HashMap<>(Map.of(
+//                "leagueId", request.getLeagueId(),
+//                "leagueName", request.getLeagueName(),
+//                "leagueCode", request.getLeagueCode(),
+//                "leagueJoinUrl", request.getLeagueJoinUrl(),
+//                "venueId", request.getVenueId(),
+//                "oneTimeToken", request.getOneTimeToken()
+//        ));
+
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("leagueId", request.getLeagueId());
+        variables.put("leagueName", request.getLeagueName());
+        variables.put("leagueCode", request.getLeagueCode());
+        variables.put("leagueJoinUrl", request.getLeagueJoinUrl());
+        variables.put("venueId", request.getVenueId());
+        variables.put("oneTimeToken", request.getOneTimeToken());
 
         try {
 

@@ -17,10 +17,10 @@ import java.io.IOException;
 @Component
 public class EmailPublishHandler {
 
-    @Value("${twilio.sendgrid.fromEmail}")
+    @Value("${twilio.sendgrid.fromEmail:sampleEmail}")
     private String fromEmail;
 
-    @Value("${twilio.sendgrid.sgApikey}")
+    @Value("${twilio.sendgrid.sgApikey:sampleKey}")
     private String sgApiKey;
 
     

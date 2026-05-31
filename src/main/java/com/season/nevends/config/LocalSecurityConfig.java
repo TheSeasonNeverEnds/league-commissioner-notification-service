@@ -15,8 +15,10 @@ public class LocalSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .csrf().disable(); // Disable CSRF for simpler testing, but be aware of security implications
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/actuator/health").permitAll()
+                    .anyRequest().permitAll())
+            .csrf().disable(); // Disable CSRF for simpler testing, but be aware of security implications
         return http.build();
 }
 
