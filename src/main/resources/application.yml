@@ -48,3 +48,8 @@ management:
 #  sendgrid:
 #    fromEmail: ${twilio.sgSourceEmail}
 #    sgApikey: ${twilio.sgApiKey}
+
+logging:
+  level:
+    org.springframework.boot.actuate.health: DEBUG
+    org.springframework.boot.actuate.endpoint: DEBUG
