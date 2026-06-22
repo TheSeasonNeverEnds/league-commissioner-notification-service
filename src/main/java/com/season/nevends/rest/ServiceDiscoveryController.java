@@ -16,7 +16,7 @@ public class ServiceDiscoveryController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    String url = "blah";
+    String url = "http://league-user-profile-service.dev.us-east-2.local:8080/actuator/health";
 
     @GetMapping(path = "/user-profile-svc")
     ResponseEntity<?> testServiceDiscovery() {
