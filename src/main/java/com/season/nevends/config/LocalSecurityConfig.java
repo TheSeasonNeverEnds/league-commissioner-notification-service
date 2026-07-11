@@ -16,8 +16,9 @@ public class LocalSecurityConfig {
     private static final String[] PUBLIC_ENDPOINTS = {
             "/actuator/health",
             "/api/v1/ping",
-            "/swagger-ui/**",
-            "/v3/api-docs/**"
+            "/swagger-ui/**/",
+            "/v3/api-docs/**",
+            "/api/v1/user-profile-svc"
     };
 
     @Bean
