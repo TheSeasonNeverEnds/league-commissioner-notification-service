@@ -1,3 +1,4 @@
+/*
 package com.season.nevends.service;
 
 import com.season.nevends.database.entities.VenueEntity;
@@ -48,3 +49,4 @@ public class VenueDetailsService {
 
     // TODO: add additional methods for venue templates when venues create postings messages
 }
+*/

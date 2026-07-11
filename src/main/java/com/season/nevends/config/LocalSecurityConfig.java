@@ -9,14 +9,22 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@Profile("local")
+@Profile({"local", "local-test", "dev"})
 @Configuration
 public class LocalSecurityConfig {
+
+    private static final String[] PUBLIC_ENDPOINTS = {
+            "/actuator/health",
+            "/api/v1/ping",
+            "/swagger-ui/**",
+            "/v3/api-docs/**"
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/actuator/health").permitAll()
+                    .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                     .anyRequest().permitAll())
             .csrf().disable(); // Disable CSRF for simpler testing, but be aware of security implications
         return http.build();

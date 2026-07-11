@@ -6,7 +6,6 @@ import com.season.nevends.model.NotificationType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -19,23 +18,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EmailServiceV1 {
 
-    @Autowired
-    private EmailPublishHandler emailPublishHandler;
+    private final EmailPublishHandler emailPublishHandler;
 
-    @Autowired
-    private SpringTemplateEngine templateEngine;
+    private final SpringTemplateEngine templateEngine;
 
     public void sendEmail(NotificationRequest request) {
-
-
-//        Map<String, Object> variables = new HashMap<>(Map.of(
-//                "leagueId", request.getLeagueId(),
-//                "leagueName", request.getLeagueName(),
-//                "leagueCode", request.getLeagueCode(),
-//                "leagueJoinUrl", request.getLeagueJoinUrl(),
-//                "venueId", request.getVenueId(),
-//                "oneTimeToken", request.getOneTimeToken()
-//        ));
 
         Map<String, Object> variables = new HashMap<>();
         variables.put("leagueId", request.getLeagueId());
@@ -46,6 +33,7 @@ public class EmailServiceV1 {
         variables.put("oneTimeToken", request.getOneTimeToken());
 
         try {
+            log.info("Processing Email Template");
 
             if (request.getNotificationType() == (NotificationType.PASSWORD_RESET)){
                 variables.put("recipient", request.getEmailRecipients().getFirst());
@@ -69,7 +57,6 @@ public class EmailServiceV1 {
     public boolean validateEmailNotificationRequest(NotificationRequest request) {
         log.info("Validating email notification v1 request for {}", request.getNotificationType());
 
-
         if (request.getNotificationType() == (NotificationType.PASSWORD_RESET)){
             return StringUtils.isNotBlank(request.getOneTimeToken());
         }
@@ -77,6 +64,7 @@ public class EmailServiceV1 {
             return ( StringUtils.isNotBlank(request.getLeagueCode()) && StringUtils.isNotBlank(request.getLeagueJoinUrl())
                 && StringUtils.isNotBlank(request.getLeagueName()) );
         }
+        log.info("Invalid email notification v1 request for {}", request.getNotificationType());
         return false;
     }
 

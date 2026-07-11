@@ -1,3 +1,4 @@
+/*
 package com.season.nevends.rest;
 
 
@@ -42,17 +43,7 @@ public class NotificationController {
 
     @GetMapping(path = "/email/recovery")
     public ResponseEntity<?> sendEmailForAcctRecovery() {
-        Twilio.init("98007488", "uRPSCHARQk60l9NrdhD7ug");
 
-        // TODO:  Need to create Verify Service
-
-//        Verification verification = Verification.creator(
-//                "98007488", // Your Service SID
-//                "+marcus97cobra@yahoo.com", // Recipient's phone number
-//                "email" // Delivery channel: 'sms', 'whatsapp', 'call', or 'email'
-//        ).create();
-
-//        return new ResponseEntity<>(verification.getSid(),  HttpStatus.OK);
         return new ResponseEntity<>(  HttpStatus.OK);
     }
 
@@ -70,3 +61,5 @@ public class NotificationController {
 
 
 }
+
+ */

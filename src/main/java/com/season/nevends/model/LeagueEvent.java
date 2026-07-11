@@ -22,8 +22,8 @@ public class LeagueEvent {
     private String eventDescription;
     private OffsetDateTime eventStartDate;
     private OffsetDateTime eventEndDate;
-    private LocalDateTime created_on;
-    private LocalDateTime updated_on;
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 
 
 }
