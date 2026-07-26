@@ -1,0 +1,98 @@
+name: Deploy to Amazon ECS - PROD
+
+on:
+  push:
+    branches: [ 'release/**', 'release-**' ]
+
+env:
+  AWS_REGION: us-east-2
+  ECR_REPOSITORY: league-user-profile-service-prod
+  ECS_SERVICE: league-user-profile-service
+  ECS_CLUSTER: ecs-prod-tsne-v1
+  ECS_TASK_DEFINITION: .aws/ecs/task-definitions/prod-task-def.json
+  CONTAINER_NAME: league-user-profile-service
+
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: dev
+
+    # OIDC authentication requires write permission for id-token
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: generate-tag
+        run: |
+          # Get branch name (e.g., 'main' or 'feature-xyz')
+          BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')
+          # Get date (YYYYMMDD format)
+          DATE=$(date +'%Y.%m.%d-%H%M')
+          # Combine them
+          echo "IMAGE_TAG=${BRANCH_NAME}-${DATE}" >> $GITHUB_ENV
+        
+
+        # Authenticate with AWS using OIDC
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::591207637355:role/GitHubAction-AssumeRoleWithAction
+          aws-region: us-east-2
+      #      with:
+      #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #       aws-region: ${{ env.AWS_REGION }}
+
+      # - name: Build with Maven
+      #   run: mvn clean package -DskipTests
+
+      # Sets up multi-arch support for Graviton
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          platforms: linux/arm64 # Targets Graviton architecture
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}-${{ env.IMAGE_TAG }}
+
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}-${{ env.IMAGE_TAG }}
+
+
+      # This action will read the existing service configuration directly and deploy the service
+      # instead of repeatedly downloading, updating and redeploying a new task definition
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          # Instead of passing a local task-definition.json file, omit it
+          # to let ECS deploy using its active task definition.
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}-${{ env.IMAGE_TAG }}
+          desired-count: 1
+          wait-for-service-stability: false
