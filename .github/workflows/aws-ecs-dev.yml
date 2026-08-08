@@ -29,6 +29,7 @@ name: Deploy to Amazon ECS - DEV
 on:
   push:
     branches: [ "feature/initial-commit" ]
+  workflow_dispatch: # Enables the manual trigger button
 
 env:
   AWS_REGION: us-east-2                   # set this to your preferred AWS region, e.g. us-west-1
