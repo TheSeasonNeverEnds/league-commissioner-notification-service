@@ -1,6 +1,14 @@
 spring:
+  config:
+    import:
+      - optional:aws-secretsmanager:/prod/application/twilio/credentials?prefix=twilio.
+      - optional:aws-secretsmanager:/prod/database/credentials?prefix=database.
+      -
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url:
-    username:
-    password:
+    url: REPLACE_ME
+    username: ${database.username}
+    password: ${database.password}
+
+springdoc:
+  api-docs:
+    enabled: true

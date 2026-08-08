@@ -1,6 +1,9 @@
 spring:
+  config:
+    import:
+      - optional:aws-secretsmanager:/dev/application/twilio/credentials?prefix=twilio.
+      - optional:aws-secretsmanager:dev/database/credentials?prefix=database.
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://theseasonneverendswl.c4uijqbxxtmv.us-east-2.rds.amazonaws.com:1433;databaseName=TSNE_WL;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.rds.amazonaws.com
     username: ${database.username}
     password: ${database.password}
@@ -9,9 +12,6 @@ spring:
     properties:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
-aws:
-  region: us-east-2
 
 springdoc:
   api-docs:

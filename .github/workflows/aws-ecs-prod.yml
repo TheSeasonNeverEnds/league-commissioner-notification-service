@@ -17,7 +17,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
 
     # OIDC authentication requires write permission for id-token
     permissions:

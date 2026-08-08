@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+participant User
+'== Initialization ==
+
+UI -> User_Profile_Service: HTTP /account/forgot-password
+
+'note over  User_Profile_Service
+'    Checks if the user has an account
+'    If so, pull the email for the account
+'
+'end note
+User_Profile_Service -> Notification_Service: HTTP /email/send
+
+
+Notification_Service -> User: Uses the Twilio SDK to send an email\nto the user's email address
+User -> UI: User enters one time token/passcode\n into the UI
+UI -> User_Profile_Service: HTTP /account/verify-otp
+User_Profile_Service -> UI: Returns HTTP 200 if the OTP matches,\nor HTTP 400 if the OTP does not match or it's expired
+
+'== Repetition ==
+
+
+@enduml
