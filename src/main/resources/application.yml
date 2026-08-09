@@ -23,6 +23,10 @@ aws:
     events: league-event-flyers
     media: league-venue-media
 
+server:
+  servlet:
+    context-path: /notification-service
+
 springdoc:
   api-docs:
     enabled: false
