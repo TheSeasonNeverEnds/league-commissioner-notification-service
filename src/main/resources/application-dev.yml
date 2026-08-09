@@ -16,3 +16,8 @@ spring:
 springdoc:
   api-docs:
     enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    # Forces the UI to fetch config relative to its current path
+    config-url: /notification-service/v3/api-docs/swagger-config
+    url: /notification-service/v3/api-docs

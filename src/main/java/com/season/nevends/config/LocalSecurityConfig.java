@@ -18,7 +18,9 @@ public class LocalSecurityConfig {
             "/api/v1/ping",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/notification-service/swagger-ui/**",
+            "/notification-service/v3/api-docs/**",
     };
 
     @Bean
