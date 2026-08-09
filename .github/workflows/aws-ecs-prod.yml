@@ -2,15 +2,16 @@ name: Deploy to Amazon ECS - PROD
 
 on:
   push:
-    branches: [ 'release/**', 'release-**' ]
+    branches: [ "feature/initial-commit" ]
+#    branches: [ 'release/**', 'release-**' ]
 
 env:
   AWS_REGION: us-east-2
-  ECR_REPOSITORY: league-user-profile-service-prod
-  ECS_SERVICE: league-user-profile-service
+  ECR_REPOSITORY: league-commissioner-notification-service-prod
+  ECS_SERVICE: league-commissioner-notification-service
   ECS_CLUSTER: ecs-prod-tsne-v1
   ECS_TASK_DEFINITION: .aws/ecs/task-definitions/prod-task-def.json
-  CONTAINER_NAME: league-user-profile-service
+  CONTAINER_NAME: league-commissioner-notification-service
 
 
 jobs:
