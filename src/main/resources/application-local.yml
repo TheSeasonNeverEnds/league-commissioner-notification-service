@@ -6,10 +6,10 @@ spring:
     import:
       - optional:aws-secretsmanager:/dev/application/twilio/credentials?prefix=twilio.
       - optional:aws-secretsmanager:dev/database/credentials?prefix=database.
-  datasource:
-    url: jdbc:sqlserver://theseasonneverendswl.c4uijqbxxtmv.us-east-2.rds.amazonaws.com:1433;databaseName=TSNE_WL;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.rds.amazonaws.com
-    username: ${database.username}
-    password: ${database.password}
+#  datasource:
+#    url: jdbc:sqlserver://theseasonneverendswl.c4uijqbxxtmv.us-east-2.rds.amazonaws.com:1433;databaseName=TSNE_WL;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.rds.amazonaws.com
+#    username: ${database.username}
+#    password: ${database.password}
 
   jpa:
     properties:
