@@ -2,13 +2,13 @@ spring:
   config:
     import:
       - optional:aws-secretsmanager:/prod/application/twilio/credentials?prefix=twilio.
-#      - optional:aws-secretsmanager:/prod/database/credentials?prefix=database.
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - optional:aws-secretsmanager:/prod/database/credentials?prefix=database.
+#  autoconfigure:
+#    exclude:
+#      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+#      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
   datasource:
-    url: REPLACE_ME
+    url: jdbc:sqlserver://theseasonneverendswl-prod.c4uijqbxxtmv.us-east-2.rds.amazonaws.com:1433;databaseName=TSNE_WL;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.rds.amazonaws.com
     username: ${database.username}
     password: ${database.password}
 

@@ -45,13 +45,13 @@ management:
       show-details: "never"
 
 
-#twilio:
-#  account:
-#    sid: account-sid
-#    auth-token: auth-token
-#  sendgrid:
-#    fromEmail: ${twilio.sgSourceEmail}
-#    sgApikey: ${twilio.sgApiKey}
+twilio:
+  account:
+    sid: account-sid
+    auth-token: auth-token
+  sendgrid:
+    fromEmail: ${twilio.sgSourceEmail}
+    sgApikey: ${twilio.sgApiKey}
 
 logging:
   level:
